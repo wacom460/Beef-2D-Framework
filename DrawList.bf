@@ -470,19 +470,19 @@ namespace framework;
 	}
 
 	[Inline]
-	public Rect drawSheetTile(AssetType asset, uint sheetWidth, uint sheetHeight, uint tileIndex, Vec2 pos, Vec2 scale = .One, Color col = .White)
-		=> drawSheetTile(hostWindow.atlas.get(asset), sheetWidth, sheetHeight, tileIndex, pos, scale, col);
+	public Rect drawSheetTile(AssetType asset, uint sheetWidth, uint sheetHeight, uint tileIndex, Vec2 pos, Vec2 origin = .Zero, Vec2 scale = .One, Color col = .White)
+		=> drawSheetTile(hostWindow.atlas.get(asset), sheetWidth, sheetHeight, tileIndex, pos, origin, scale, col);
 
 	[Inline]
-	public Rect drawSheetTile(TextureAtlas.AtlasLoc sheetLoc, uint sheetWidth, uint sheetHeight, uint tileIndex, Vec2 pos, Vec2 scale = .One, Color col = .White) {
+	public Rect drawSheetTile(TextureAtlas.AtlasLoc sheetLoc, uint sheetWidth, uint sheetHeight, uint tileIndex, Vec2 pos, Vec2 origin = .Zero, Vec2 scale = .One, Color col = .White) {
 		var tileIndex;
 		if(tileIndex >= sheetWidth * sheetHeight)
 			tileIndex = (sheetWidth * sheetHeight) - 1;
-		let rp = sheetLoc.rectPixels, q = sheetLoc.quad;
-		let tileSzPx = Vec2(rp.size.x / sheetWidth, rp.size.y / sheetHeight),
+		let rp = sheetLoc.rectPixels, q = sheetLoc.quad,
+			tileSzPx = Vec2(rp.size.x / sheetWidth, rp.size.y / sheetHeight),
 			tileSzQ = Vec2(q.WidthQ / sheetWidth, q.HeightQ / sheetHeight),
-			sz = Rect(pos.x, pos.y, tileSzPx.x * scale.x, tileSzPx.y * scale.y),
-		 	apos = Vec2(sheetLoc.topLeft.x + ((tileIndex % sheetWidth) * tileSzQ.x),
+			sz = Rect(pos.x - (tileSzPx.x * origin.x * scale.y), pos.y - (tileSzPx.y * origin.y * scale.y), tileSzPx.x * scale.x, tileSzPx.y * scale.y),
+			apos = Vec2(sheetLoc.topLeft.x + ((tileIndex % sheetWidth) * tileSzQ.x),
 				sheetLoc.topLeft.y + ((tileIndex / sheetWidth) * tileSzQ.y));
 		fillBox(sz, col, .(apos, apos + tileSzQ));
 		return sz;

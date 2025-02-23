@@ -114,6 +114,10 @@ abstract class Window {
 			case .WindowEvent:
 				let we = e.window.windowEvent;
 				if(we == .Resized) {
+					int32 w = 0;
+					int32 h = 0;
+					SDL.GetWindowSize(this, out w, out h);
+					winSize = .((.)w, (.)h);
 					regenAtlas();
 				}
 				if(we == .Focus_lost) focus = false;
