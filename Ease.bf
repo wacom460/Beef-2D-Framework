@@ -1,0 +1,38 @@
+using Bon;
+namespace framework;
+
+[BonTarget] public enum Ease : uint32 {
+	None,
+	In,
+	Out = _ * 2,
+	InOut = _ * 2,
+	InCubic = _ * 2,
+	OutCubic = _ * 2,
+	InOutCubic = _ * 2,
+	InQuart = _ * 2,
+	OutQuart = _ * 2,
+	InOutQuart = _ * 2,
+	InQuint = _ * 2,
+	OutQuint = _ * 2,
+	InOutQuint = _ * 2,
+	InSine = _ * 2,
+	OutSine = _ * 2,
+	InOutSine = _ * 2,
+	InExpo = _ * 2,
+	OutExpo = _ * 2,
+	InOutExpo = _ * 2,
+	InCirc = _ * 2,
+	OutCirc = _ * 2,
+	InOutCirc = _ * 2,
+	InElastic = _ * 2,
+	OutElastic = _ * 2,
+	OutElasticHalf = _ * 2,
+	OutElasticQuarter = _ * 2,
+	InOutElastic = _ * 2,
+	InBack = _ * 2,
+	OutBack = _ * 2,
+	InOutBack = _ * 2,
+	InBounce = _ * 2,
+	OutBounce = _ * 2,
+	InOutBounce = _ * 2
+}
