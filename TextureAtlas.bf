@@ -144,7 +144,8 @@ class TextureAtlas {
 			rect.x += (.)gsz.x + 5;
 		}
 
-		for(let a in Asset.GetAllOfExt(.Png)) addImage(Assets.Get(a), a);
+		let pngs = Asset.GetAllOfExt!(AssetExt.Png);
+		for(let a in pngs) addImage(Assets.Get(a), a);
 
 		SDL.SetRenderDrawColor(w.renderer, 255, 255, 255, 255);
 		SDL.Rect tltR = .(0, 0, 1, 1);

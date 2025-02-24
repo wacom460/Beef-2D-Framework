@@ -4,13 +4,13 @@ using System.Collections;
 namespace framework;
 
 class Asset {
-	[Comptime] public static Span<AssetType> GetAllOfExt(AssetExt ext) {
-		List<AssetType> ret = scope .();
+	public static mixin GetAllOfExt(AssetExt ext) {
+		List<AssetType> ret = scope:mixin .();
 		for(let i < AssetType.Count) {
-			let str = scope $"{i}";
-			let extStr = scope $"{ext}";
-			if(str.EndsWith(extStr)) ret.Add(i);
+			let str = scope:mixin $"{i}", extStr = scope:mixin $"{ext}";
+			if(str.EndsWith(extStr))
+				ret.Add(i);
 		}
-		return ret;
+		ret
 	}
 }
