@@ -39,6 +39,16 @@ namespace framework;
 
 	public struct Tri {
 		public SDL.Vertex[3] verts;
+		public float v1x => verts[0].position.x;
+		public float v1y => verts[0].position.y;
+		public float v2x => verts[1].position.x;
+		public float v2y => verts[1].position.y;
+		public float v3x => verts[2].position.x;
+		public float v3y => verts[2].position.y;
+
+		public Color v1c => verts[0].color;
+		public Color v2c => verts[1].color;
+		public Color v3c => verts[2].color;
 
 		public this(SDL.Vertex v1, SDL.Vertex v2, SDL.Vertex v3) {
 			verts = .(v1, v2, v3);
