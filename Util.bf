@@ -9,20 +9,7 @@ using System.Threading;
 
 namespace framework;
 
-static class Util
-{
-	public static void GetNameStrs(FileFindEntry f, String name, String nameOg, String nameNoExt, String ext) {
-		f.GetFileName(name);
-		nameOg.Set(name);
-		name.Replace(' ', '_');
-		name.Replace('-', '_');
-		Path.GetFileNameWithoutExtension(name, nameNoExt);
-		Path.GetExtension(name, ext);
-		ext.Replace('.', '_');
-		ext.Set(ext.Substring(1));
-		ext.Set(scope $"{ext.Substring(0, 1)[0].ToUpper}{ext.Substring(1, ext.Length - 1)}");
-	}
-
+public static class Util {
 	public static T Scale<T>(T value, T fromMin, T fromMax, T toMin, T toMax)
 		where T : operator T + T, operator T - T, operator T * T, operator T / T, operator T<=>T
 	{
@@ -47,6 +34,18 @@ static class Util
 		return value;
 	}
 
+	public static void GetNameStrs(FileFindEntry f, String name, String nameOg, String nameNoExt, String ext) {
+		f.GetFileName(name);
+		nameOg.Set(name);
+		name.Replace(' ', '_');
+		name.Replace('-', '_');
+		Path.GetFileNameWithoutExtension(name, nameNoExt);
+		Path.GetExtension(name, ext);
+		ext.Replace('.', '_');
+		ext.Set(ext.Substring(1));
+		ext.Set(scope $"{ext.Substring(0, 1)[0].ToUpper}{ext.Substring(1, ext.Length - 1)}");
+	}
+
 	public static (SDL.Surface*, SDL.Texture*, void* idata) LoadImage(Window w, void *pngData, int32 dataLen)
 	{
 		SDL.Surface* surface = null;
@@ -56,12 +55,17 @@ static class Util
 		var pitch = width * bpp;
 		pitch = (pitch + 3) & ~3;
 		surface = SDL.CreateRGBSurfaceFrom(idata, width, height, bpp*8, pitch, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-		if(surface == null) Debug.WriteLine(scope String(SDL.GetError()));
-		Debug.Assert(surface != null);
-		texture = SDL.CreateTextureFromSurface(w.renderer, surface);
-		Debug.Assert(texture != null);
-		SDL.SetTextureBlendMode(texture, .Blend);
-		return (surface, texture, idata);
+		/*if(surface == null) Debug.WriteLine(scope String(SDL.GetError()));
+		Debug.Assert(surface != null);*/
+		if(surface != null) {
+			texture = SDL.CreateTextureFromSurface(w.renderer, surface);
+			Debug.Assert(texture != null);
+			SDL.SetTextureBlendMode(texture, .Blend);
+			return (surface, texture, idata);
+		}
+		if(idata != null)
+			Internal.Free(idata);
+		return (null, null, null);
 	}
 
 	public static void OpenFile(String path) {
@@ -78,20 +82,6 @@ static class Util
 
 	public static void WriteStrToFile(String text, String path) {
 		File.WriteAllText(path, text);
-	}
-
-	public static void LimitMulti<T>(T max, params Span<T*> all) where T : var
-	{
-		for(let p in all) if(*p > max) *p = max;
-	}
-
-	public static float ExpScale(float inputValue, float midValue, float maxValue)
-	{
-	  float M = maxValue / midValue;
-	  float C = Math.Log(Math.Pow(M - 1, 2));
-	  float B = maxValue / (Math.Exp(C) - 1);
-	  float A = -1 * B;
-	  return A + B * Math.Exp(C * inputValue);
 	}
 
 	public static void ShowInExplorerRelativePath(String relPath)
@@ -120,18 +110,18 @@ static class Util
 		dtStr
 	}
 
+	public static void OpenURL(String str) {
+		ProcessStartInfo p = scope .();
+		p.SetFileName(str);
+		p.UseShellExecute = true;
+		scope SpawnedProcess().Start(p);
+	}
+
 	public static void RenderImageRect(Window w, SDL.Texture* texture, TextureAtlas.AtlasLoc loc, Rect dstRect, Color col = .White)
 	{
 		Debug.Assert(texture != null);
 		DrawList dl = scope .(w);
 		dl.fillBox(dstRect, col, loc);
 		dl.render(texture);
-	}
-
-	public static void OpenURL(String str) {
-		ProcessStartInfo p = scope .();
-		p.SetFileName(str);
-		p.UseShellExecute = true;
-		scope SpawnedProcess().Start(p);
 	}
 }

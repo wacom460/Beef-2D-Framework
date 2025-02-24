@@ -500,7 +500,7 @@ namespace framework;
 	public void fillBox(Rect rect, Color col = .White, TextureAtlas.AtlasLoc al = .Zero)
 	{
 		var rect;
-		if(col.a ==0 )return;
+		if(col.a == 0) return;
 		let sr = ScissorRect;
 		if(sr != .Zero) rect.limitToBox(sr);
 		addMulti(

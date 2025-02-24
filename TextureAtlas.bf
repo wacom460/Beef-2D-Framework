@@ -120,6 +120,7 @@ class TextureAtlas {
 
 		void addImage(Span<uint8> img, AssetType type) {
 			Img i = scope .(w, img.Ptr, (.)img.Length);
+			if(!i.Valid) return;
 			SDL.SetTextureBlendMode(i.texture, .None);
 			let gsz = Vec2(i.surface.w, i.surface.h);
 			if(rect.y + gsz.y >= Size) {

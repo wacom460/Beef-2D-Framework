@@ -10,6 +10,7 @@ class Img {
 	public SDL.Surface* surface ~ if(_ != null) SDL.FreeSurface(_);
 	public SDL.Texture* texture ~ if(_ != null) SDL.DestroyTexture(_);
 
+	public bool Valid => surface != null && texture != null;
 	public Vec2 Size => .(surface.w, surface.h);
 
 	public this(Window w, void *pngData, int32 dataLen, bool freeIData = true) {

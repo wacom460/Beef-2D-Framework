@@ -80,8 +80,13 @@ namespace framework;
 		return (.)Math.Abs(Math.Sqrt((nmx * nmx) + (nmy * nmy)));
 	}
 
-	public static int DistToLine(Vec2 p, Vec2 p1, Vec2 p2)
-	{
+	
+	public static Vec2 AngleLine(Vec2 from, float deg, float dist) {
+		float radians = (deg / 360) * (Math.PI_f * 2);
+		return .(from.x + Math.Cos(radians) * dist, from.y + Math.Sin(radians) * dist);
+	}
+
+	public static float DistToLine(Vec2 p, Vec2 p1, Vec2 p2) {
 		float A = p.x - p1.x; // position of point rel one end of line
 		float B = p.y - p1.y;
 		float C = p2.x - p1.x; // vector along line
@@ -92,7 +97,7 @@ namespace framework;
 		float dot = A * E + B * F;
 		float len_sq = E * E + F * F;
 
-		return (.)(Math.Abs(dot) / Math.Sqrt(len_sq));
+		return Math.Abs(dot) / Math.Sqrt(len_sq);
 	}
 
 	public override void ToString(String strBuffer) => strBuffer.Append(scope $"x: {x} y: {y}");
