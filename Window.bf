@@ -9,7 +9,7 @@ using Bon;
 namespace framework;
 
 abstract class Window {
-	public bool open = true, focus;
+	public bool open = true, focus, firstFrameDone;
 	public SDL.Window* sdlWindow ~ SDL.DestroyWindow(_);
 	public SDL.Renderer* renderer ~ SDL.DestroyRenderer(_);
 	public MouseContext mouse = .();
@@ -68,7 +68,7 @@ abstract class Window {
 	void start() {
 		gBonEnv.serializeFlags |= .Verbose | .IncludeDefault;
 		let centered = SDL.WindowPosCenteredDisplay(0);
-		sdlWindow = SDL.CreateWindow(title, (.)centered, (.)centered, (.)winSize.x, (.)winSize.y, .Shown);
+		sdlWindow = SDL.CreateWindow(title, (.)centered, (.)centered, (.)winSize.x, (.)winSize.y, .Hidden);
 		renderer = SDL.CreateRenderer(sdlWindow, -1, .Accelerated);
 		Debug.Assert(renderer != null);
 		SDL.SetRenderDrawBlendMode(renderer, .Blend);
@@ -146,6 +146,9 @@ abstract class Window {
 			for(var k in ref kbBuf) k &= ~(1UL << 3);
 			anyKeyRep = false;
 		}
+
+		if(!firstFrameDone) show();
+		firstFrameDone = true;
 
 		SDL.Delay(16);
 	}

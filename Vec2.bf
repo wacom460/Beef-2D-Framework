@@ -8,6 +8,7 @@ namespace framework;
 
 	public const Vec2 Zero = .(0, 0);
 	public const Vec2 One = .(1, 1);
+	public Vec2 Div2 => this / 2;
 
 	public float x;
 	public float y;

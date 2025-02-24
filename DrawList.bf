@@ -29,12 +29,12 @@ namespace framework;
 		ref tris[idx]
 	};
 
-	public this() {
-		this.hostWindow = null;
-	}
-	
 	public this(Window w) {
 		this.hostWindow = w;
+	}
+
+	public void moveAll(Vec2 amount) {
+		for(let t in ref tris) for(var v in ref t.verts) v.position += amount;
 	}
 
 	public struct Tri {

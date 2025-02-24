@@ -1,6 +1,7 @@
 using System.Collections;
 using System;
 using System.IO;
+using framework;
 
 namespace framework;
 
@@ -58,6 +59,10 @@ extension SDL {
 		public new this(float x, float y) {
 			this.x = x;
 			this.y = y;
+		}
+		public void operator+=(Vec2 r) mut {
+			x += r.x;
+			y += r.y;
 		}
 	}
 	extension MessageBoxButtonData {
