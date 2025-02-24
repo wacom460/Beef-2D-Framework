@@ -469,6 +469,14 @@ namespace framework;
 		line(rect.BottomLeft, rect.TopLeft, col, thickness);
 	}
 
+	public struct SheetContext : this(DrawList dl, AssetType asset, uint width, uint height) {
+		public Rect drawTile(uint tileIndex, Vec2 pos, Vec2 origin = .Zero, Vec2 scale = .One, Color col = .White)
+			=> dl.drawSheetTile(asset, width, height, tileIndex, pos, origin, scale, col);
+	}
+
+	public SheetContext getSheetCtx(AssetType asset, uint width, uint height)
+		=> .(this, asset, width, height);
+
 	[Inline]
 	public Rect drawSheetTile(AssetType asset, uint sheetWidth, uint sheetHeight, uint tileIndex, Vec2 pos, Vec2 origin = .Zero, Vec2 scale = .One, Color col = .White)
 		=> drawSheetTile(hostWindow.atlas.get(asset), sheetWidth, sheetHeight, tileIndex, pos, origin, scale, col);
