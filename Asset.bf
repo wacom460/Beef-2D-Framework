@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace framework;
 
-class Asset {
+static class Asset {
 	public static mixin GetAllOfExt(AssetExt ext) {
 		List<AssetType> ret = scope:mixin .();
 		for(let i < AssetType.Count) {

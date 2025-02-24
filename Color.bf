@@ -44,6 +44,9 @@ namespace framework;
 	public static operator SDL.Color(Color c)
 		=> .((.)c.r, (.)c.g, (.)c.b, (.)c.a);
 
+	public static operator Color(SDL.Color c)
+		=> .((.)c.r, (.)c.g, (.)c.b, (.)c.a);
+
 	public static operator Self(uint32 pixel) {
 		uint8 r = (.)(pixel & 0xFF);
 		uint8 g = (.)((pixel >> 8) & 0xFF);
